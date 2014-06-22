@@ -47,7 +47,7 @@ public class SequenceController {
     public SequenceDefinition update(final @PathVariable("tenant") Long tenant,
                                      final @PathVariable("name") String name,
                                      final @RequestBody RequestParameters params) {
-        return sequenceNumberService.update(tenant, name, params.getFormat(), params.getNumber());
+        return sequenceNumberService.update(tenant, name, params.getFormat(), params.getCurrent(), params.getNumber());
     }
 
     @Secured("ROLE_ADMIN")
@@ -71,6 +71,7 @@ public class SequenceController {
 
     private static class RequestParameters {
         private String format;
+        private Long current;
         private Long number;
 
         public RequestParameters() {
@@ -78,6 +79,10 @@ public class SequenceController {
 
         public String getFormat() {
             return format;
+        }
+
+        public Long getCurrent() {
+            return current;
         }
 
         public Long getNumber() {

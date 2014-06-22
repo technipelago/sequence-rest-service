@@ -68,16 +68,18 @@ public class SequenceNumberService {
     }
 
     /**
-     * Update existing sequence.
+     * Update existing sequence. To reduce concurrency problems the caller must specify both the current number
+     * and the new start number. If the specified current number does not match the persistent number, update will fail.
      *
-     * @param tenant     tenant id
-     * @param name       name of sequence
-     * @param format     number format
-     * @param nextNumber new start number
+     * @param tenant        tenant id
+     * @param name          name of sequence
+     * @param format        number format
+     * @param currentNumber current start number
+     * @param nextNumber    new start number
      * @return updated SequenceDefinition
      */
     @Transactional
-    public SequenceDefinition update(final Long tenant, final String name, final String format, final Long nextNumber) {
+    public SequenceDefinition update(final Long tenant, final String name, final String format, final Long currentNumber, final Long nextNumber) {
         SequenceDefinition sequenceDefinition = sequenceDefinitionRepository.findByNameAndTenantId(name, tenant);
         if (sequenceDefinition == null) {
             throw new ResourceNotFoundException("Sequence definition [" + name + "] not found in tenant [" + tenant + "]");
@@ -96,6 +98,10 @@ public class SequenceNumberService {
                 sequenceNumber = sequenceNumberRepository.findById(sequenceNumber.getId());
                 if (sequenceNumber == null) {
                     throw new org.springframework.data.rest.webmvc.ResourceNotFoundException("Sequence number [" + name + "] not found in tenant [" + tenant + "]");
+                }
+                Long persistentNumber = sequenceNumber.getNumber();
+                if (!persistentNumber.equals(currentNumber)) {
+                    throw new IllegalStateException("Sequence number [" + name + "] in tenant [" + tenant + "] was changed to [" + persistentNumber + "] by another request");
                 }
                 sequenceNumber.setNumber(nextNumber);
             }
