@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
 /**
- * Created by goran on 2014-06-21.
+ * Service for managing sequences.
  */
 @Service
 public class SequenceNumberService {
@@ -22,6 +22,15 @@ public class SequenceNumberService {
         return sequenceDefinitionRepository.findAllByTenantId(tenant);
     }
 
+    /**
+     * Create new sequence.
+     *
+     * @param tenant tenant id
+     * @param name   name of sequence
+     * @param format number format
+     * @param start  start number for the sequence
+     * @return the created SequenceDefinition
+     */
     @Transactional
     public SequenceDefinition create(final Long tenant, final String name, final String format, final Long start) {
         SequenceDefinition sequenceDefinition = sequenceDefinitionRepository.findByNameAndTenantId(name, tenant);
@@ -37,6 +46,13 @@ public class SequenceNumberService {
         return sequenceDefinition;
     }
 
+    /**
+     * Delete a sequence.
+     *
+     * @param tenant tenant id
+     * @param name   name of sequence
+     * @return deleted SequenceDefinition
+     */
     @Transactional
     public SequenceDefinition delete(final Long tenant, final String name) {
         SequenceDefinition sequenceDefinition = sequenceDefinitionRepository.findByNameAndTenantId(name, tenant);
@@ -51,6 +67,15 @@ public class SequenceNumberService {
         return sequenceDefinition;
     }
 
+    /**
+     * Update existing sequence.
+     *
+     * @param tenant     tenant id
+     * @param name       name of sequence
+     * @param format     number format
+     * @param nextNumber new start number
+     * @return updated SequenceDefinition
+     */
     @Transactional
     public SequenceDefinition update(final Long tenant, final String name, final String format, final Long nextNumber) {
         SequenceDefinition sequenceDefinition = sequenceDefinitionRepository.findByNameAndTenantId(name, tenant);
@@ -80,6 +105,13 @@ public class SequenceNumberService {
         return sequenceDefinition;
     }
 
+    /**
+     * Get next number from a sequence.
+     *
+     * @param tenant tenant id
+     * @param name   name of sequence
+     * @return next number from the sequence
+     */
     @Transactional
     public String next(final Long tenant, final String name) {
         SequenceDefinition sequenceDefinition = sequenceDefinitionRepository.findByNameAndTenantId(name, tenant);
