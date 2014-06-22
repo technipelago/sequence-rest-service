@@ -1,5 +1,7 @@
 package se.technipelago.sequence;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -22,6 +24,8 @@ import static reactor.event.selector.Selectors.$;
 @ComponentScan
 public class SequenceApplication {
 
+    private static final Logger LOG = LoggerFactory.getLogger(SequenceApplication.class);
+
     public static void main(String[] args) {
         SpringApplication.run(SequenceApplication.class, args);
     }
@@ -39,9 +43,9 @@ public class SequenceApplication {
                 DeferredResult<String> result = data.getResult();
                 try {
                     String number = sequenceNumberService.next(data.getTenant(), data.getName());
-                    result.setResult(number);
-                } catch(Exception e) {
-                    System.err.println(e.getMessage());
+                    result.setResult("{ \"number\": \"" + number + "\" }\n");
+                } catch (Exception e) {
+                    LOG.error("Exception in sequence event listener", e);
                     result.setErrorResult(e);
                 }
                 return result;
