@@ -5,7 +5,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 import java.io.Serializable;
 
 /**
- * Created by goran on 2014-06-22.
+ * Sequence reactor events carry this payload.
  */
 public class SequenceEvent implements Serializable {
 
