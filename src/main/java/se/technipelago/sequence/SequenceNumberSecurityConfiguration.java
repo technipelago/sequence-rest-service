@@ -16,10 +16,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SequenceNumberSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Value("${user.password}")
+    @Value("${sequence.user.password}")
     private String userPassword;
 
-    @Value("${admin.password}")
+    @Value("${sequence.admin.password}")
     private String adminPassword;
 
     @Override
