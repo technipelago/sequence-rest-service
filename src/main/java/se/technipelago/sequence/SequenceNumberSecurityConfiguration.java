@@ -1,18 +1,19 @@
 package se.technipelago.sequence;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /**
- * Created by goran on 2014-06-22.
+ * Spring Security Configuration.
  */
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SequenceNumberSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Value("${user.password}")
@@ -22,7 +23,7 @@ public class SequenceNumberSecurityConfiguration extends WebSecurityConfigurerAd
     private String adminPassword;
 
     @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 // enable in memory based authentication with a user named
                 // "user" and "admin"
@@ -33,6 +34,12 @@ public class SequenceNumberSecurityConfiguration extends WebSecurityConfigurerAd
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/api/**").hasAnyRole("USER", "ADMIN")
+                .anyRequest().anonymous()
+                .and()
+                .httpBasic();
     }
 }

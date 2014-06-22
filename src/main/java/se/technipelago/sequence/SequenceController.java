@@ -1,6 +1,7 @@
 package se.technipelago.sequence;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,7 +13,7 @@ import reactor.core.Reactor;
 import reactor.event.Event;
 
 /**
- * Created by goran on 2014-05-23.
+ * Sequence REST Controller.
  */
 @RestController
 public class SequenceController {
@@ -23,11 +24,13 @@ public class SequenceController {
     @Autowired
     private SequenceNumberService sequenceNumberService;
 
+    @Secured("ROLE_ADMIN")
     @RequestMapping("/api/sequence/{tenant}")
     public Iterable<SequenceDefinition> list(final @PathVariable("tenant") Long tenant) {
         return sequenceNumberService.getDefinitions(tenant);
     }
 
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/api/sequence/{tenant}/{name}", method = RequestMethod.POST)
     @Transactional
     public SequenceDefinition create(final @PathVariable("tenant") Long tenant,
@@ -38,6 +41,7 @@ public class SequenceController {
         return sequenceNumberService.create(tenant, name, format != null ? format : "%d", number != null ? number : 1L);
     }
 
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/api/sequence/{tenant}/{name}", method = RequestMethod.PUT)
     @Transactional
     public SequenceDefinition update(final @PathVariable("tenant") Long tenant,
@@ -46,6 +50,7 @@ public class SequenceController {
         return sequenceNumberService.update(tenant, name, params.getFormat(), params.getNumber());
     }
 
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/api/sequence/{tenant}/{name}", method = RequestMethod.DELETE)
     @Transactional
     public SequenceDefinition delete(final @PathVariable("tenant") Long tenant,
@@ -53,6 +58,7 @@ public class SequenceController {
         return sequenceNumberService.delete(tenant, name);
     }
 
+    @Secured("ROLE_USER")
     @RequestMapping(value = "/api/sequence/{tenant}/{name}", method = RequestMethod.GET)
     @Transactional
     public DeferredResult<String> next(final @PathVariable("tenant") Long tenant,
