@@ -41,6 +41,14 @@ public class SequenceController {
         return sequenceNumberService.create(tenant, name, format != null ? format : "%d", number != null ? number : 1L);
     }
 
+    @Secured("ROLE_USER")
+    @RequestMapping(value = "/api/sequence/{tenant}/{name}", method = RequestMethod.GET)
+    @Transactional
+    public SequenceStatus status(final @PathVariable("tenant") Long tenant,
+                                     final @PathVariable("name") String name) {
+        return sequenceNumberService.status(tenant, name);
+    }
+
     @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/api/sequence/{tenant}/{name}", method = RequestMethod.PUT)
     @Transactional
@@ -59,7 +67,7 @@ public class SequenceController {
     }
 
     @Secured("ROLE_USER")
-    @RequestMapping(value = "/api/sequence/{tenant}/{name}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/sequence/{tenant}/{name}/next", method = RequestMethod.GET)
     @Transactional
     public DeferredResult<String> next(final @PathVariable("tenant") Long tenant,
                                        final @PathVariable("name") String name) {

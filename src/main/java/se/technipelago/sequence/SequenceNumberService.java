@@ -143,4 +143,26 @@ public class SequenceNumberService {
         return format != null ? String.format(format, number) : number.toString();
     }
 
+    /**
+     * Get status for a sequence.
+     *
+     * @param tenant tenant id
+     * @param name   name of sequence
+     * @return snapshot of the sequence status
+     */
+    @Transactional
+    public SequenceStatus status(final Long tenant, final String name) {
+        SequenceDefinition sequenceDefinition = sequenceDefinitionRepository.findByNameAndTenantId(name, tenant);
+        if (sequenceDefinition == null) {
+            throw new ResourceNotFoundException("Sequence definition [" + name + "] not found in tenant [" + tenant + "]");
+        }
+
+        SequenceNumber sequenceNumber = sequenceNumberRepository.findByDefinitionAndGroupIsNull(sequenceDefinition);
+        if (sequenceNumber == null) {
+            sequenceNumber = new SequenceNumber(sequenceDefinition, 1L);
+            sequenceNumber = sequenceNumberRepository.save(sequenceNumber);
+        }
+
+        return new SequenceStatus(sequenceDefinition.getName(), sequenceDefinition.getFormat(), sequenceNumber.getNumber());
+    }
 }
