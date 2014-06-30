@@ -8,6 +8,12 @@ You can control the starting number and the format for each sequence.
 In Grails applications you can use the plugin [Restful Sequence Number Generator](https://github.com/goeh/grails-sequence-generator-rest)
 as a client. The Grails client will communicate with this service to get unique sequence numbers.
 
+## Why not use database sequences?
+
+Although database sequences are fast they put restrictions on data types (i.e. require numbers).
+This service lets you use formatted sequence numbers, for example *TICKET-1234* and you can also change the sequence number programatically.
+You could for example reset the sequence to start with *YYYY0001* on the first of January every year.
+
 ## Configuration
 
 *application.properties*
