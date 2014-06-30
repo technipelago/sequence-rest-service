@@ -1,7 +1,12 @@
 # Sequence Generator REST Service
 
-This Spring Boot application uses Reactor framework to
-generate unique number sequences in concurrent environments.
+This Spring Boot application uses Reactor framework to generate unique sequence numbers in concurrent environments.
+
+This service can be used to generate customer, invoice, case numbers, etc.
+You can control the starting number and the format for each sequence.
+
+In Grails applications you can use the plugin [Restful Sequence Number Generator](https://github.com/goeh/grails-sequence-generator-rest)
+as a client. The Grails client will communicate with this service to get unique sequence numbers.
 
 ## Configuration
 
