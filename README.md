@@ -45,14 +45,27 @@ The following request creates a new sequence called **Customer** that will start
 
 The following three requests returns number **01001**, **01002** and **01003**.
 
-    curl -u user:password  http://localhost:8082/api/sequence/1/Customer
+    curl -u user:password  http://localhost:8082/api/sequence/1/Customer/next
     { "number": "01001" }
     
-    curl -u user:password  http://localhost:8082/api/sequence/1/Customer
+    curl -u user:password  http://localhost:8082/api/sequence/1/Customer/next
     { "number": "01002" }
     
-    curl -u user:password  http://localhost:8082/api/sequence/1/Customer
+    curl -u user:password  http://localhost:8082/api/sequence/1/Customer/next
     { "number": "01003" }
+
+
+### Get status of a sequence
+
+The following request returns the status of a sequence without increasing the number.
+
+    curl -u user:password  http://localhost:8082/api/sequence/1/Customer
+    {
+      "timestamp" : 1404149733472,
+      "name" : "Customer",
+      "format" : "%05d",
+      "number" : 1004
+    }
 
 ### Update a sequence
 
@@ -62,7 +75,7 @@ If the current sequence number is not equal to the specified number, the update 
 
     curl --user admin:password -H "Accept: application/json" -H "Content-Type: application/json" -X PUT -d '{"current":1004, "number":5000}' http://localhost:8082/api/sequence/1/Customer
 
-    curl -u user:password  http://localhost:8082/api/sequence/1/Customer
+    curl -u user:password  http://localhost:8082/api/sequence/1/Customer/next
     { "number": "05000" }
     
 ### Delete a sequence
