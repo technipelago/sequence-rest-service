@@ -57,7 +57,7 @@ The following three requests returns number **01001**, **01002** and **01003**.
 
 ### Get status of a sequence
 
-The following request returns the status of a sequence without increasing the number.
+The following request returns the status of the **Customer** sequence without increasing the number.
 
     curl -u user:password  http://localhost:8082/api/sequence/1/Customer
     {
