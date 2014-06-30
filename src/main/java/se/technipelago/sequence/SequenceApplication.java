@@ -14,7 +14,6 @@ import reactor.core.Reactor;
 import reactor.core.spec.Reactors;
 import reactor.event.Event;
 import reactor.function.Consumer;
-import reactor.function.Function;
 import reactor.spring.context.config.EnableReactor;
 
 import static reactor.event.selector.Selectors.$;
