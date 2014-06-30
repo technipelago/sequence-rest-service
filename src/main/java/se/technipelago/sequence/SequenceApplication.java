@@ -13,6 +13,7 @@ import reactor.core.Environment;
 import reactor.core.Reactor;
 import reactor.core.spec.Reactors;
 import reactor.event.Event;
+import reactor.function.Consumer;
 import reactor.function.Function;
 import reactor.spring.context.config.EnableReactor;
 
@@ -37,8 +38,8 @@ public class SequenceApplication {
     public Reactor reactor(Environment env) {
         Reactor reactor = Reactors.reactor(env, Environment.RING_BUFFER);
 
-        reactor.receive($("sequence"), new Function<Event<SequenceEvent>, DeferredResult<String>>() {
-            public DeferredResult<String> apply(Event<SequenceEvent> ev) {
+        reactor.on($("sequence"), new Consumer<Event<SequenceEvent>>() {
+            public void accept(Event<SequenceEvent> ev) {
                 SequenceEvent data = ev.getData();
                 DeferredResult<String> result = data.getResult();
                 try {
@@ -48,7 +49,6 @@ public class SequenceApplication {
                     LOG.error("Exception in sequence event listener", e);
                     result.setErrorResult(e);
                 }
-                return result;
             }
         });
 
