@@ -27,7 +27,7 @@ public class SequenceServiceIntegrationTests {
         assertEquals("0100", sequenceNumberService.next(1L, "test"));
         assertEquals("0101", sequenceNumberService.next(1L, "test"));
         assertEquals("0102", sequenceNumberService.next(1L, "test"));
-        sequenceNumberService.update(1L, "test", "%03d", 99L);
+        sequenceNumberService.update(1L, "test", "%03d", 103L, 99L);
         assertEquals("099", sequenceNumberService.next(1L, "test"));
         assertEquals("100", sequenceNumberService.next(1L, "test"));
         assertEquals("101", sequenceNumberService.next(1L, "test"));
