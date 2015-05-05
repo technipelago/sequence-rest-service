@@ -1,16 +1,14 @@
 buildscript {
     repositories {
-        //maven { url "http://repo.spring.io/libs-milestone" }
         mavenCentral()
-        mavenLocal()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.9.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE")
     }
 }
 
 apply plugin: 'java'
-apply plugin: 'groovy'
+apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
@@ -21,8 +19,10 @@ jar {
 
 repositories {
     mavenCentral()
-    //maven { url "http://repo.spring.io/milestone" }
 }
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
@@ -35,10 +35,10 @@ dependencies {
     //compile("org.grails:gorm-hibernate4-spring-boot:1.0.0.M1")
     testCompile("junit:junit")
     testCompile("org.springframework.boot:spring-boot-starter-test")
-    runtime("com.h2database:h2:1.4.182")
-    runtime("mysql:mysql-connector-java:5.1.34")
+    runtime("com.h2database:h2:1.4.187")
+    runtime("mysql:mysql-connector-java:5.1.35")
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
+    gradleVersion = '2.4'
 }
