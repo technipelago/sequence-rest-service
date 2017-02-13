@@ -34,7 +34,7 @@ public class SequenceApplication {
     private SequenceNumberService sequenceNumberService;
 
     @Bean
-    public Reactor reactor(Environment env) {
+    public Reactor reactor(final Environment env) {
         Reactor reactor = Reactors.reactor(env, Environment.RING_BUFFER);
 
         reactor.on($("sequence"), new Consumer<Event<SequenceEvent>>() {

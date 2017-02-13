@@ -4,8 +4,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -13,8 +15,10 @@ import static org.junit.Assert.fail;
 /**
  * Tests for SequenceNumberService.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = SequenceApplication.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@SpringApplicationConfiguration(classes = SequenceApplication.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = SequenceApplication.class, webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class SequenceServiceIntegrationTests {
 
     @Autowired
