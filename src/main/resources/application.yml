@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    initialSize: 10
+    maxTotal: 100
+    maxIdle: 20
+    minEvictableIdleTimeMillis: 60000
+    maxWaitMillis: 30000
+    testOnBorrow: true
+    validationQuery: select now()
+    removeAbandonedOnBorrow: true
+    removeAbandonedTimeout: 60
+    logAbandoned: true
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: create-drop
+
+sequence:
+  user:
+    password: secret
+  admin:
+    password: top-secret
