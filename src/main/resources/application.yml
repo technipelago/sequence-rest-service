@@ -1,3 +1,6 @@
+server:
+  port: 8082
+
 spring:
   datasource:
     initialSize: 10
@@ -17,6 +20,6 @@ spring:
 
 sequence:
   user:
-    password: secret
+    password: password
   admin:
-    password: top-secret
+    password: password
