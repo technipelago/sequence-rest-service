@@ -1,7 +1,8 @@
 node {
-    /*stage('Checkout') {
-      git url: 'https://github.com/technipelago/sequence-rest-service.git'
-    }*/
+    stage('Checkout') {
+      checkout scm
+      //git url: 'https://github.com/technipelago/sequence-rest-service.git'
+    }
    stage('build') {
      sh "./gradlew build"
    }
