@@ -1,10 +1,15 @@
 pipeline {
-    agent { docker 'maven:3.3.3' }
+    agent { docker 'maven:3.3.9' }
     stages {
         stage('build') {
             steps {
-                sh 'mvn --version'
+                sh './gradle build'
             }
+        }
+    }
+    post {
+        always {
+            junit 'target/surefire-reports/*.xml'
         }
     }
 }
