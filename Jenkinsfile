@@ -1,8 +1,12 @@
+#!groovy​
+
 node {
-    stage('Checkout') {
+    stage('checkout') {
       checkout scm
-      //git url: 'https://github.com/technipelago/sequence-rest-service.git'
     }
+   stage('coverage') {
+     sh "./gradlew cobertura"
+   }
    stage('build') {
      sh "./gradlew build"
    }
