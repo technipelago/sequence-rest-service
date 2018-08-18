@@ -19,11 +19,7 @@ package se.technipelago.sequence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 import reactor.core.Reactor;
 import reactor.event.Event;
@@ -61,7 +57,7 @@ public class SequenceController {
     @RequestMapping(value = "/api/sequence/{tenant}/{name}", method = RequestMethod.GET)
     @Transactional
     public SequenceStatus status(final @PathVariable("tenant") Long tenant,
-                                     final @PathVariable("name") String name) {
+                                 final @PathVariable("name") String name) {
         return sequenceNumberService.status(tenant, name);
     }
 

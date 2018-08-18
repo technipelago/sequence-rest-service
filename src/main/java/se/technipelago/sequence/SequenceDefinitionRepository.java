@@ -25,5 +25,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource(collectionResourceRel = "definitions", path = "definitions")
 interface SequenceDefinitionRepository extends CrudRepository<SequenceDefinition, Long> {
     Iterable<SequenceDefinition> findAllByTenantId(Long tenant);
+
     SequenceDefinition findByNameAndTenantId(String name, Long tenant);
 }
